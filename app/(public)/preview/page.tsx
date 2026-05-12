@@ -8,6 +8,6 @@ export default function PreviewPage() {
       <h2>Preview</h2>
       <Skeleton count={6} />
     </div>
-    
+    test
   )
 }
