@@ -1,0 +1,54 @@
+@reference "../../app/globals.css";
+
+.grid {
+  @apply grid gap-4;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.card {
+  @apply bg-light rounded-xl p-6 w-full;
+}
+
+.block {
+  @apply bg-lighter rounded-md;
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+.header {
+  @apply flex items-center gap-4 mb-6;
+}
+
+.avatar {
+  @apply rounded-full shrink-0;
+  width: 64px;
+  height: 64px;
+}
+
+.headerLines {
+  @apply flex flex-col gap-3 flex-1;
+}
+
+.lineLong {
+  @apply h-3 w-full;
+}
+
+.lineMedium {
+  @apply h-3 w-4/5;
+}
+
+.body {
+  @apply flex flex-col gap-4;
+}
+
+.lineFull {
+  @apply h-3 w-full;
+}
+
+.lineShort {
+  @apply h-3 w-3/5;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
