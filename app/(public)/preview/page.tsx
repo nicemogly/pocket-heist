@@ -6,8 +6,9 @@ export default function PreviewPage() {
   return (
     <div className="page-content">
       <h2>Preview</h2>
-      <Skeleton count={6} />
+      <Skeleton count={20} />
     </div>
-    test
+    
+
   )
 }
