@@ -12,7 +12,8 @@ export default function Home() {
         <h1>
           P<Clock8 className="logo" strokeWidth={2.75} />cket Heist
         </h1>
-        <div>Tiny missions. Big office mischief.</div>
+        <div>Hook test — pranks with purpose.</div>
+
         <p>
           Welcome to Pocket Heist — the workplace pranks league you never knew
           you needed. Create sneaky micro-missions, assign them to unsuspecting

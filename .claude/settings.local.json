@@ -2,13 +2,24 @@
   "permissions": {
     "allow": [
       "Bash(npm run *)",
-      "Bash(Get-Content \"C:\\\\Users\\\\Superman\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--DEV-claude-POCKET-HEIST\\\\b885a873-f7de-4833-abf1-dd5db4607586\\\\tasks\\\\b90z7tfkj.output\" -Wait)",
-      "Bash(Select-String -Pattern \"Ready in|Local:|Error|EADDRINUSE\")",
       "Bash(Start-Process *)",
       "PowerShell(Start-Process \"http://localhost:3000\")",
       "WebSearch",
       "Bash(git init)",
       "Bash(git switch:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "fp=$(cat | grep -o '\"file_path\" *: *\"[^\"]*\"' | grep -o '\"[^\"]*\"$' | tr -d '\"'); if [[ -n \"$fp\" ]] && [[ \"$fp\" =~ \\.tsx?$ ]]; then npx prettier --write \"$fp\" >/dev/null 2>&1 && printf '{\"systemMessage\":\"Formatted: %s\"}' \"$fp\" || printf '{\"systemMessage\":\"Prettier failed: %s\"}' \"$fp\"; else echo '{\"systemMessage\":\"Hook fired — not a .tsx file\"}'; fi"
+          }
+        ]
+      }
     ]
   }
 }
