@@ -1,0 +1,46 @@
+@reference "../../globals.css";
+
+.form {
+  @apply flex flex-col gap-4 mx-auto;
+  max-width: 28rem;
+}
+
+.field {
+  @apply flex flex-col gap-1;
+}
+
+.label {
+  @apply text-sm text-body;
+}
+
+.passwordWrapper {
+  @apply flex flex-row items-center gap-2;
+}
+
+.input {
+  @apply w-full bg-light text-heading border border-lighter rounded-md px-3 py-2 outline-none;
+}
+
+.input:focus {
+  @apply border-primary;
+}
+
+.toggleBtn {
+  @apply text-sm text-primary cursor-pointer bg-transparent border-0 px-2 py-2 whitespace-nowrap;
+}
+
+.toggleBtn:hover {
+  @apply text-secondary;
+}
+
+.switchLink {
+  @apply text-center text-sm text-body mt-2;
+}
+
+.switchLink a {
+  @apply text-primary;
+}
+
+.switchLink a:hover {
+  @apply text-secondary;
+}
