@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# verification scripts & screenshots
+verify-*.mjs
+verify-*.png
+t[0-9]-*.png
