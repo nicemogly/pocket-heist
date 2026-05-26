@@ -2,15 +2,26 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
+vi.mock("@/lib/firebase", () => ({ auth: {}, default: {} }));
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ replace: vi.fn(), push: vi.fn() }),
+}));
+
+const mockCreateUser = vi.fn();
+vi.mock("firebase/auth", () => ({
+  createUserWithEmailAndPassword: (...args: unknown[]) =>
+    mockCreateUser(...args),
+}));
+
 import SignupPage from "@/app/(public)/signup/page";
 
 describe("SignupPage", () => {
   beforeEach(() => {
-    vi.spyOn(console, "log").mockImplementation(() => {});
+    mockCreateUser.mockResolvedValue({});
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
+    vi.clearAllMocks();
   });
 
   it("renders the email input", () => {
@@ -46,7 +57,7 @@ describe("SignupPage", () => {
     expect(passwordInput).toHaveAttribute("type", "password");
   });
 
-  it("logs the email and password to console on submit", async () => {
+  it("calls createUserWithEmailAndPassword with email and password on submit", async () => {
     const user = userEvent.setup();
     render(<SignupPage />);
 
@@ -54,10 +65,11 @@ describe("SignupPage", () => {
     await user.type(screen.getByLabelText(/password/i), "hunter2");
     await user.click(screen.getByRole("button", { name: /sign up/i }));
 
-    expect(console.log).toHaveBeenCalledWith({
-      email: "newuser@example.com",
-      password: "hunter2",
-    });
+    expect(mockCreateUser).toHaveBeenCalledWith(
+      {},
+      "newuser@example.com",
+      "hunter2",
+    );
   });
 
   it("has a switch link to /login", () => {

@@ -2,15 +2,25 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 
+vi.mock("@/lib/firebase", () => ({ auth: {}, default: {} }));
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ replace: vi.fn(), push: vi.fn() }),
+}));
+
+const mockSignIn = vi.fn();
+vi.mock("firebase/auth", () => ({
+  signInWithEmailAndPassword: (...args: unknown[]) => mockSignIn(...args),
+}));
+
 import LoginPage from "@/app/(public)/login/page";
 
 describe("LoginPage", () => {
   beforeEach(() => {
-    vi.spyOn(console, "log").mockImplementation(() => {});
+    mockSignIn.mockResolvedValue({});
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
+    vi.clearAllMocks();
   });
 
   it("renders the email input", () => {
@@ -44,7 +54,7 @@ describe("LoginPage", () => {
     expect(passwordInput).toHaveAttribute("type", "password");
   });
 
-  it("logs the email and password to console on submit", async () => {
+  it("calls signInWithEmailAndPassword with email and password on submit", async () => {
     const user = userEvent.setup();
     render(<LoginPage />);
 
@@ -52,10 +62,7 @@ describe("LoginPage", () => {
     await user.type(screen.getByLabelText(/password/i), "secret");
     await user.click(screen.getByRole("button", { name: /log in/i }));
 
-    expect(console.log).toHaveBeenCalledWith({
-      email: "user@example.com",
-      password: "secret",
-    });
+    expect(mockSignIn).toHaveBeenCalledWith({}, "user@example.com", "secret");
   });
 
   it("has a switch link to /signup", () => {
