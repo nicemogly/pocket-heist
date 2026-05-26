@@ -44,3 +44,8 @@
 .switchLink a:hover {
   @apply text-secondary;
 }
+
+.error {
+  @apply text-sm text-center;
+  color: #de2f2f;
+}

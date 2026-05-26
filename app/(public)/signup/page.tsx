@@ -1,17 +1,38 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 import styles from "./signup.module.css";
+import Button from "@/components/Button";
 
 export default function SignupPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log({ email, password });
+    setError("");
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      router.push("/heists");
+    } catch (err: unknown) {
+      if (
+        err &&
+        typeof err === "object" &&
+        "code" in err &&
+        err.code === "auth/email-already-in-use"
+      ) {
+        setError("이미 사용 중인 이메일입니다.");
+      } else {
+        setError("회원가입에 실패했습니다. 다시 시도해 주세요.");
+      }
+    }
   }
 
   return (
@@ -54,9 +75,8 @@ export default function SignupPage() {
               </button>
             </div>
           </div>
-          <button type="submit" className="btn btn-primary">
-            Sign Up
-          </button>
+          {error && <p className={styles.error}>{error}</p>}
+          <Button type="submit">Sign Up</Button>
           <p className={styles.switchLink}>
             Already have an account? <Link href="/login">Log in</Link>
           </p>

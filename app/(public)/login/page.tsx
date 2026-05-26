@@ -1,17 +1,29 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 import styles from "./login.module.css";
+import Button from "@/components/Button";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log({ email, password });
+    setError("");
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      router.push("/heists");
+    } catch {
+      setError("이메일 또는 비밀번호가 올바르지 않습니다.");
+    }
   }
 
   return (
@@ -54,9 +66,8 @@ export default function LoginPage() {
               </button>
             </div>
           </div>
-          <button type="submit" className="btn btn-primary">
-            Log In
-          </button>
+          {error && <p className={styles.error}>{error}</p>}
+          <Button type="submit">Log In</Button>
           <p className={styles.switchLink}>
             Don&apos;t have an account? <Link href="/signup">Sign up</Link>
           </p>

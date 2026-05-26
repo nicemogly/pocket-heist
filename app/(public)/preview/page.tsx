@@ -1,7 +1,8 @@
 // preview page for newly created UI components
 
-import Skeleton from "@/components/Skeleton"
-import Avatar from "@/components/Avatar"
+import Skeleton from "@/components/Skeleton";
+import Avatar from "@/components/Avatar";
+import RedBlock from "@/components/RedBlock";
 
 export default function PreviewPage() {
   return (
@@ -9,7 +10,14 @@ export default function PreviewPage() {
       <h2>Preview</h2>
 
       <h3>Avatar</h3>
-      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: "1rem",
+          flexWrap: "wrap",
+          alignItems: "center",
+        }}
+      >
         <Avatar name="alice" />
         <Avatar name="John" />
         <Avatar name="JohnDoe" />
@@ -18,6 +26,9 @@ export default function PreviewPage() {
 
       <h3>Skeleton</h3>
       <Skeleton count={20} />
+
+      <h3>RedBlock</h3>
+      <RedBlock />
     </div>
-  )
+  );
 }
