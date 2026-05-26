@@ -15,3 +15,23 @@
 svg.logo {
   display: inline-block;
 }
+
+.siteNav ul {
+  @apply flex items-center gap-3;
+}
+
+.userInfo {
+  @apply flex items-center gap-3;
+}
+
+.email {
+  @apply text-sm text-body;
+}
+
+.logoutBtn {
+  @apply text-sm text-body cursor-pointer bg-transparent border border-lighter rounded-md px-3 py-1.5 transition-colors;
+}
+
+.logoutBtn:hover {
+  @apply text-heading border-body;
+}
