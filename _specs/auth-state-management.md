@@ -1,6 +1,6 @@
 # Spec for Auth State Management
 
-branch: claude/feature/auth-state-management
+branch: claude/feature/auth-state-management-01
 
 ## Summary
 

@@ -6,7 +6,10 @@
       "PowerShell(Start-Process \"http://localhost:3000\")",
       "WebSearch",
       "Bash(git init)",
-      "Bash(git switch:*)"
+      "Bash(git switch:*)",
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   },
   "hooks": {
